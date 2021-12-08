@@ -1,0 +1,135 @@
+[
+  {
+    "polishWord": "epiblast",
+    "definition": "A part of the blastocyst from which the germ layers form.",
+    "synonyms": [
+      {
+        "singularForm": "epiblast",
+        "pluralUncountable": "epiblasts",
+        "pluralCountable": "epiblasts"
+      },
+      {
+        "singularForm": "primitiveectoderm",
+        "pluralUncountable": "primitiveectoderms",
+        "pluralCountable": "primitiveectoderms"
+      }
+    ],
+    "reference": false
+  },
+  {
+    "polishWord": "epibolia",
+    "definition": "A movement of cells during gastrulation leading to covering of another layer of cells.",
+    "synonyms": [
+      {
+        "singularForm": "epiboly",
+        "pluralUncountable": null,
+        "pluralCountable": "epibolys"
+      }
+    ],
+    "reference": false
+  },
+  {
+    "polishWord": "epistaza",
+    "definition": "A phenomenon in which one gene's product influences expression of another gene.",
+    "synonyms": [
+      {
+        "singularForm": "epistasis",
+        "pluralUncountable": null,
+        "pluralCountable": "epistases"
+      }
+    ],
+    "reference": false
+  },
+  {
+    "polishWord": "epifitoza",
+    "definition": "A plant disease that affects a large percentage of the population.",
+    "synonyms": [
+      {
+        "singularForm": "epiphytotic",
+        "pluralUncountable": "epiphytotics",
+        "pluralCountable": "epiphytotics"
+      }
+    ],
+    "reference": false
+  },
+  {
+    "polishWord": "filotaksja",
+    "definition": "Distribution of leaves on a plant.",
+    "synonyms": [
+      {
+        "singularForm": "phyllotaxis",
+        "pluralUncountable": null,
+        "pluralCountable": "phyllotaxes"
+      },
+      {
+        "singularForm": "phyllotaxy",
+        "pluralUncountable": null,
+        "pluralCountable": "phyllotaxies"
+      }
+    ],
+    "reference": false
+  },
+  {
+    "polishWord": "florystyka",
+    "definition": "The study and registering of plants from a given area.",
+    "synonyms": [
+      {
+        "singularForm": "floristics",
+        "pluralUncountable": null,
+        "pluralCountable": null
+      }
+    ],
+    "reference": false
+  },
+  {
+    "polishWord": "ulistnienie",
+    "definition": "Distribution of leaves on a plant.",
+    "synonyms": [
+      {
+        "singularForm": "phyllotaxis",
+        "pluralUncountable": null,
+        "pluralCountable": "phyllotaxes"
+      },
+      {
+        "singularForm": "phyllotaxy",
+        "pluralUncountable": null,
+        "pluralCountable": "phyllotaxies"
+      }
+    ],
+    "reference": true
+  },
+  {
+    "polishWord": "fotoliza",
+    "definition": "",
+    "synonyms": [
+      {
+        "singularForm": "photodissociation",
+        "pluralUncountable": null,
+        "pluralCountable": "photodissociations"
+      },
+      {
+        "singularForm": "photolysis",
+        "pluralUncountable": null,
+        "pluralCountable": null
+      },
+      {
+        "singularForm": "photodecomposition",
+        "pluralUncountable": "photodecompositions",
+        "pluralCountable": null
+      }
+    ],
+    "reference": false
+  },
+  {
+    "polishWord": "gastrula",
+    "definition": "A development stage of an embryo formed of two layers of cells.",
+    "synonyms": [
+      {
+        "singularForm": "gastrula",
+        "pluralUncountable": "gastrulas",
+        "pluralCountable": "gastrulae"
+      }
+    ],
+    "reference": false
+  }
+]
