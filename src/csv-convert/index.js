@@ -1,4 +1,4 @@
-import { reduceData } from "./reducer.js";
-import { jsonData } from "./converter.js";
+import { reduceData } from './reducer.js'
+import { jsonData } from './converter.js'
 
-export const dataJson = reduceData(jsonData);
+export const dataJson = reduceData(jsonData)
