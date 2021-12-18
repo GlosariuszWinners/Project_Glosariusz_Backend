@@ -12,7 +12,7 @@ export default {
 		const per_page = parseInt(req.query.per_page) || 2;
 		const wordsPromise = Word.find().skip(offset).limit(per_page);
 
-		const countPromise = Word.count();
+		const countPromise = Word.countDocuments();
 		const [words, count] = await Promise.all([wordsPromise, countPromise]);
 
 		return res.status(200).send({ data: words, count });
