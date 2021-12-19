@@ -1,18 +1,18 @@
-import { Router } from 'express'
-import passport from 'passport'
-import { catchAsync } from '../middlewares/errors'
-import AuthController from '../controllers/authController'
+import { Router } from 'express';
+import passport from 'passport';
+import AuthController from '../controllers/authController';
+import { catchAsync } from '../middlewares/errors';
 
 export default () => {
-    const api = Router()
+    const api = Router();
 
-    api.post('/register', AuthController.register)
+    api.post('/register', catchAsync(AuthController.register));
 
     api.post(
         '/login',
         passport.authenticate('local', { session: false }),
-        AuthController.login
-    )
+        catchAsync(AuthController.login)
+    );
 
-    return api
-}
+    return api;
+};

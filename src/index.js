@@ -1,50 +1,52 @@
-import dotenv from 'dotenv'
-import express from 'express'
-import rateLimit from 'express-rate-limit'
-import mongoose from 'mongoose'
-import config from './config/config'
-import dbConfig from './config/database'
-import passport from './config/passport'
-import { catchErrors, notFound } from './middlewares/errors'
-import auth from './routes/auth'
-import words from './routes/words'
+import dotenv from 'dotenv';
+import express from 'express';
+import rateLimit from 'express-rate-limit';
+import mongoose from 'mongoose';
+import config from './config/config';
+import dbConfig from './config/database';
+import passport from './config/passport';
+import { catchErrors, notFound } from './middlewares/errors';
+import auth from './routes/auth';
+import words from './routes/words';
 
-dotenv.config({ path: '.env' })
+dotenv.config({ path: '.env' });
 
-passport()
+passport();
 
-mongoose.connect(dbConfig.mongoUrl, dbConfig.settings)
+mongoose.connect(dbConfig.mongoUrl, dbConfig.settings);
 
 mongoose.connection.on('connected', () => {
-    console.log('MongoDB connection open')
-})
+    console.log('MongoDB connection open');
+});
 
 mongoose.connection.on('error', (err) => {
-    console.error(`MongoDB connection error: ${err}`)
-    process.exit()
-})
+    console.error(`MongoDB connection error: ${err}`);
+    process.exit();
+});
 
-const app = express()
+const app = express();
 
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // rate limiting
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-    message: 'Too many requests from this IP, please try again later',
-})
-app.use(limiter)
+if (config.env === 'development') {
+    const limiter = rateLimit({
+        windowMs: 15 * 60 * 1000,
+        max: 100,
+    });
+
+    app.use(limiter);
+}
 
 // routes config
-app.use('/api/words', words())
-app.use('/api/auth', auth())
+app.use('/api/words', words());
+app.use('/api/auth', auth());
 
 // errors handling
-app.use(notFound)
-app.use(catchErrors)
+app.use(notFound);
+app.use(catchErrors);
 
 app.listen(config.server.port, () => {
-    console.log(`Server is running on port ${config.server.port}`)
-})
+    console.log(`Server is running on port ${config.server.port}`);
+});
