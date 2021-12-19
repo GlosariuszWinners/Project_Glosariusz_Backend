@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import passportLocalMongoose from 'passport-local-mongoose'
+import mongoose from 'mongoose';
+import passportLocalMongoose from 'passport-local-mongoose';
 
 const userSchema = mongoose.Schema(
     {
@@ -12,8 +12,8 @@ const userSchema = mongoose.Schema(
     {
         timestamps: true,
     }
-)
+);
 
-userSchema.plugin(passportLocalMongoose, { usernameField: 'login' })
+userSchema.plugin(passportLocalMongoose, { usernameField: 'login' });
 
-export default mongoose.model('User', userSchema)
+export default mongoose.model('User', userSchema);
