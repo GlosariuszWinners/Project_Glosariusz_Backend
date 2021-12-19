@@ -1,2 +1,3 @@
-import { dataJson } from "./index.js";
-console.log(dataJson);
+import { dataJson } from './index.js'
+
+console.log(dataJson)

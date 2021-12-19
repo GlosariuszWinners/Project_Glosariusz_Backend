@@ -1,3 +1,6 @@
 export default {
-	mongoUrl: 'mongodb://localhost:27017/glossary',
-};
+    mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/glossary',
+    settings: {
+        useNewUrlParser: true,
+    },
+}

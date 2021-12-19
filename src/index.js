@@ -1,35 +1,50 @@
-import bodyParser from 'body-parser';
-import express from 'express';
-import mongoose from 'mongoose';
-import { join } from 'path';
-import config from './config/config';
-import './config/database';
-import dbConfig from './config/database';
-import { catchErrors, notFound } from './middlewares/errors';
-import words from './routes/words';
+import dotenv from 'dotenv'
+import express from 'express'
+import rateLimit from 'express-rate-limit'
+import mongoose from 'mongoose'
+import config from './config/config'
+import dbConfig from './config/database'
+import passport from './config/passport'
+import { catchErrors, notFound } from './middlewares/errors'
+import auth from './routes/auth'
+import words from './routes/words'
 
-mongoose.connect(dbConfig.mongoUrl);
-mongoose.Promise = global.Promise;
+dotenv.config({ path: '.env' })
+
+passport()
+
+mongoose.connect(dbConfig.mongoUrl, dbConfig.settings)
+
+mongoose.connection.on('connected', () => {
+    console.log('MongoDB connection open')
+})
+
 mongoose.connection.on('error', (err) => {
-	console.error(`MongoDB connection error: ${err}`);
-	process.exit();
-});
+    console.error(`MongoDB connection error: ${err}`)
+    process.exit()
+})
 
-const app = express();
+const app = express()
 
-app.set('view engine', 'pug');
-app.set('views', join(__dirname, 'views'));
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+
+// rate limiting
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+    message: 'Too many requests from this IP, please try again later',
+})
+app.use(limiter)
 
 // routes config
-app.use('/api/words', words());
+app.use('/api/words', words())
+app.use('/api/auth', auth())
 
 // errors handling
-app.use(notFound);
-app.use(catchErrors);
+app.use(notFound)
+app.use(catchErrors)
 
 app.listen(config.server.port, () => {
-	console.log(`Server is running on port ${config.server.port}`);
-});
+    console.log(`Server is running on port ${config.server.port}`)
+})
