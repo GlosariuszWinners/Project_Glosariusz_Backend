@@ -11,8 +11,8 @@ export default {
         const sort_by = {};
         sort_by[req.query.sort_by || 'slug'] = req.query.order_by || 'asc';
 
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 25;
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 25;
         const skip = (page - 1) * limit || 0;
 
         const words = await Word.paginate({
@@ -22,9 +22,10 @@ export default {
             limit,
             skip,
         });
-
-        return words?.results.length
-            ? res.status(200).send(words)
+        res.set('Access-Control-Expose-Headers', 'X-Total-Count');
+        res.set('X-Total-Count', words?.info?.count);
+        return words?.data.length
+            ? res.status(200).send(words?.data)
             : res.status(404).send({ error: 'There is nothing here' });
     },
 
