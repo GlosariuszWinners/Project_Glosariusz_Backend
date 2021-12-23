@@ -2,6 +2,7 @@ import { Router } from 'express';
 import wordsController from '../controllers/wordsController';
 import jwtAuth from '../middlewares/auth';
 import { catchAsync } from '../middlewares/errors';
+import getFilters from '../middlewares/filters/words';
 
 export default () => {
     const api = Router();
@@ -10,7 +11,7 @@ export default () => {
     api.get('/:slug', catchAsync(wordsController.findOne));
 
     // GET /words
-    api.get('/', jwtAuth, catchAsync(wordsController.findAll));
+    api.get('/', getFilters, catchAsync(wordsController.findAll));
 
     // POST /words
     api.post('/', jwtAuth, catchAsync(wordsController.create));

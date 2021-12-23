@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
@@ -28,9 +29,10 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(process.env.JWT_TOKEN));
 
 // rate limiting
-if (config.env === 'development') {
+if (config.env === 'production') {
     const limiter = rateLimit({
         windowMs: 15 * 60 * 1000,
         max: 100,

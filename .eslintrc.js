@@ -18,6 +18,7 @@ module.exports = {
         radix: 'warn',
         camelcase: 'off',
         'no-console': 'off',
+        'consistent-return': 'off',
         'prettier/prettier': [
             'error',
             {

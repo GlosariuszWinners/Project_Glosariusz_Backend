@@ -1,4 +1,10 @@
 {
-	"presets": ["env"],
-	"plugins": ["transform-async-to-generator", "transform-object-rest-spread"]
+	"presets": [
+		"@babel/preset-env"
+	],
+	"plugins": [
+		"@babel/plugin-transform-async-to-generator",
+		"@babel/plugin-syntax-object-rest-spread",
+		"@babel/plugin-proposal-optional-chaining"
+	]
 }

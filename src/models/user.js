@@ -1,18 +1,14 @@
 import mongoose from 'mongoose';
 import passportLocalMongoose from 'passport-local-mongoose';
 
-const userSchema = mongoose.Schema(
-    {
-        login: {
-            type: String,
-            unique: true,
-            trim: true,
-        },
+const userSchema = mongoose.Schema({
+    login: {
+        type: String,
+        unique: true,
+        trim: true,
     },
-    {
-        timestamps: true,
-    }
-);
+    password: String,
+});
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'login' });
 
