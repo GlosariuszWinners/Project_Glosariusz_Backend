@@ -7,6 +7,11 @@ export default {
             expiresIn: 60 * 60,
         });
 
+        res.cookie('jwt', token, {
+            maxAge: 1000 * 60 * 60,
+            httpOnly: true,
+        });
+
         return res.send({ token });
     },
 

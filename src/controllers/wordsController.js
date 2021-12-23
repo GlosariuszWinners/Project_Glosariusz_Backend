@@ -8,14 +8,24 @@ export default {
     },
 
     async findAll(req, res) {
-        const offset = parseInt(req.query.offset) || 0;
-        const per_page = parseInt(req.query.per_page) || 2;
-        const wordsPromise = Word.find().skip(offset).limit(per_page);
+        const sort_by = {};
+        sort_by[req.query.sort_by || 'slug'] = req.query.order_by || 'asc';
 
-        const countPromise = Word.countDocuments();
-        const [words, count] = await Promise.all([wordsPromise, countPromise]);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 25;
+        const skip = (page - 1) * limit || 0;
 
-        return res.status(200).send({ data: words, count });
+        const words = await Word.paginate({
+            req,
+            sort_by,
+            page,
+            limit,
+            skip,
+        });
+
+        return words?.results.length
+            ? res.status(200).send(words)
+            : res.status(404).send({ error: 'There is nothing here' });
     },
 
     async create(req, res) {

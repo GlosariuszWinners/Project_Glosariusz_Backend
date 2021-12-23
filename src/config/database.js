@@ -1,5 +1,5 @@
 export default {
-    mongoUrl: process.env.MONGO_URL || 'mongodb://localhost:27017/glossary',
+    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/glossary',
     settings: {
         useNewUrlParser: true,
     },
