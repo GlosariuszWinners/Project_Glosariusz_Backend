@@ -36,6 +36,7 @@ Word.statics.paginate = async function ({ req, sort_by, page, limit, skip }) {
                 {
                     $project: {
                         _id: 0,
+                        id: '$_id',
                         slug: 1,
                         polishWord: 1,
                         definition: 1,
@@ -76,7 +77,7 @@ Word.statics.paginate = async function ({ req, sort_by, page, limit, skip }) {
                     ],
                 },
             },
-            results: {
+            data: {
                 $slice: [
                     '$data',
                     skip,

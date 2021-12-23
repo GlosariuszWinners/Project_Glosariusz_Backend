@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import config from './config/config';
 import dbConfig from './config/database';
 import passport from './config/passport';
@@ -26,7 +27,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.JWT_TOKEN));
