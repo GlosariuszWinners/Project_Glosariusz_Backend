@@ -3,6 +3,7 @@ import passportJWT from 'passport-jwt';
 import User from '../models/user';
 
 const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 function verifyCallback(payload, done) {
     return User.findOne({ _id: payload.id })
@@ -10,19 +11,19 @@ function verifyCallback(payload, done) {
         .catch((err) => done(err));
 }
 
-const cookieExtractor = (req) => {
-    let jwt = null;
+// const cookieExtractor = (req) => {
+//     let jwt = null;
 
-    if (req && req.cookies) {
-        jwt = req.cookies.jwt;
-    }
+//     if (req && req.cookies) {
+//         jwt = req.cookies.jwt;
+//     }
 
-    return jwt;
-};
+//     return jwt;
+// };
 
 export default () => {
     const config = {
-        jwtFromRequest: cookieExtractor,
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
         secretOrKey: process.env.JWT_TOKEN,
     };
     passport.use(User.createStrategy());
