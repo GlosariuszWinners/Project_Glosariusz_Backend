@@ -1,12 +1,6 @@
 import Word from '../models/word';
 
 export default {
-    async findOne(req, res, next) {
-        const word = await Word.findOne({ slug: req.params.slug });
-        if (!word) return next();
-        return res.status(200).send({ data: word });
-    },
-
     async findAll(req, res) {
         const sort_by = {};
         sort_by[req.query.sort_by || 'slug'] = req.query.order_by || 'asc';
@@ -22,8 +16,10 @@ export default {
             limit,
             skip,
         });
+        res.set('Access-Control-Expose-Headers', 'X-Total-Count');
+        res.set('X-Total-Count', words?.info?.count);
         return words?.data.length
-            ? res.status(200).send(words)
+            ? res.status(200).send(words?.data)
             : res.status(404).send({ error: 'There is nothing here' });
     },
 

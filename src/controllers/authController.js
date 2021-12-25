@@ -4,12 +4,7 @@ import User from '../models/user';
 export default {
     async login(req, res, next) {
         const token = jwt.sign({ id: req.user._id }, process.env.JWT_TOKEN, {
-            expiresIn: 60 * 60,
-        });
-
-        res.cookie('jwt', token, {
-            maxAge: 1000 * 60 * 60,
-            httpOnly: true,
+            expiresIn: 1000 * 60 * 60,
         });
 
         return res.send({ token });
