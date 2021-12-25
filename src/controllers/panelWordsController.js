@@ -17,7 +17,7 @@ export default {
             skip,
         });
         res.set('Access-Control-Expose-Headers', 'X-Total-Count');
-        res.set('X-Total-Count', words?.info?.count);
+        res.set('X-Total-Count', parseInt(words?.info?.count));
         return words?.data.length
             ? res.status(200).send(words?.data)
             : res.status(404).send({ error: 'There is nothing here' });
@@ -30,10 +30,10 @@ export default {
             synonyms: req.body.synonyms,
             reference: req.body.reference,
         });
-
-        return res
-            .status(201)
-            .send({ data: word, message: 'Word was created' });
+        const response = {
+            id: word._id,
+        };
+        return res.status(201).send(response);
     },
 
     async update(req, res, next) {
