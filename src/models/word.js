@@ -107,4 +107,43 @@ Word.statics.paginate = async function ({ req, sort_by, page, limit, skip }) {
     return words[0];
 };
 
+Word.statics.paginatePanel = async function ({
+    req,
+    sortWithOrder,
+    startPaginate,
+    endPaginate,
+}) {
+    const words = await this.aggregate()
+        .match(req.filters)
+        .sort(sortWithOrder)
+        .facet({
+            total: [{ $count: 'count' }],
+            data: [
+                {
+                    $project: {
+                        _id: 0,
+                        id: '$_id',
+                        slug: 1,
+                        polishWord: 1,
+                        definition: 1,
+                        synonyms: 1,
+                        reference: 1,
+                    },
+                },
+            ],
+        })
+        .unwind('total')
+        .project({
+            info: {
+                count: '$total.count',
+            },
+            data: {
+                $slice: ['$data', startPaginate, endPaginate],
+            },
+        })
+        .exec();
+
+    return words[0];
+};
+
 export default mongoose.model('Word', Word);
