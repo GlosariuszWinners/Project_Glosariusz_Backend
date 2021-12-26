@@ -1,6 +1,19 @@
 import Word from '../models/word';
 
 export default {
+    async findOne(req, res, next) {
+        const word = await Word.findOne({ _id: req.params.id });
+        if (!word) return next();
+        const response = {
+            id: word._id,
+            polishWord: word.polishWord,
+            definition: word.definition,
+            synonyms: word.synonyms,
+            reference: word.reference,
+        };
+        return res.status(200).send(response);
+    },
+
     async findAll(req, res) {
         const sort_by = {};
         sort_by[req.query.sort_by || 'slug'] = req.query.order_by || 'asc';
@@ -37,22 +50,26 @@ export default {
     },
 
     async update(req, res, next) {
-        const word = await Word.findOne({ slug: req.params.slug });
+        const update = {
+            polishWord: req.body?.polishWord,
+            synonyms: req.body?.synonyms,
+            reference: req.body?.reference,
+            definition: req.body?.definition,
+        };
+        const word = await Word.findByIdAndUpdate(req.params.id, update, {
+            new: true,
+        });
         if (!word) return next();
 
-        word.polishWord = req.body.polishWord;
-        word.definition = req.body.definition;
-        word.synonyms = req.body.synonyms;
-        word.reference = req.body.reference;
-        await word.save();
+        const response = {
+            id: word._id,
+        };
 
-        return res
-            .status(200)
-            .send({ data: word, message: 'Word was updated' });
+        return res.status(200).send(response);
     },
 
     async remove(req, res, next) {
-        const word = await Word.findOne({ slug: req.params.slug });
+        const word = await Word.findOne({ _id: req.params.id });
         if (!word) return next();
         await word.remove();
 
