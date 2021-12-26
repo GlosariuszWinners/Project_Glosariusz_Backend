@@ -15,22 +15,20 @@ export default {
     },
 
     async findAll(req, res) {
-        const sort_by = {};
-        sort_by[req.query.sort_by || 'slug'] = req.query.order_by || 'asc';
-
-        const page = parseInt(req.query.page, 10) || 1;
-        const limit = parseInt(req.query.limit, 10) || 25;
-        const skip = (page - 1) * limit || 0;
-
-        const words = await Word.paginate({
+        const sortBy = req.query?._sort === 'id' ? '_id' : req.query?._sort;
+        const orderBy = req.query?._order.toLowerCase();
+        const sortWithOrder = {};
+        sortWithOrder[sortBy] = orderBy;
+        const startPaginate = parseInt(req.query?._start, 10);
+        const endPaginate = parseInt(req.query?._end, 10);
+        const words = await Word.paginatePanel({
             req,
-            sort_by,
-            page,
-            limit,
-            skip,
+            sortWithOrder,
+            startPaginate,
+            endPaginate,
         });
         res.set('Access-Control-Expose-Headers', 'X-Total-Count');
-        res.set('X-Total-Count', parseInt(words?.info?.count));
+        res.set('X-Total-Count', parseInt(words?.info?.count, 10));
         return words?.data.length
             ? res.status(200).send(words?.data)
             : res.status(404).send({ error: 'There is nothing here' });
