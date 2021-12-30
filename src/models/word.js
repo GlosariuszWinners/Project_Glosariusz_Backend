@@ -14,12 +14,23 @@ const Word = mongoose.Schema({
     },
     synonyms: [
         {
+            _id: false,
             singularForm: String,
             pluralCountable: String,
             pluralUncountable: String,
         },
     ],
     reference: Boolean,
+});
+
+Word.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform(doc, ret) {
+        ret.id = ret.slug;
+        delete ret.slug;
+        delete ret._id;
+    },
 });
 
 // Word.index({ polishWord: 'text' });
@@ -36,8 +47,7 @@ Word.statics.paginate = async function ({ req, sort_by, page, limit, skip }) {
                 {
                     $project: {
                         _id: 0,
-                        id: '$_id',
-                        slug: 1,
+                        id: '$slug',
                         polishWord: 1,
                         definition: 1,
                         synonyms: 1,
@@ -103,45 +113,6 @@ Word.statics.paginate = async function ({ req, sort_by, page, limit, skip }) {
         url.searchParams.set('page', page - 1);
         words[0].info.previous = url.toString();
     }
-
-    return words[0];
-};
-
-Word.statics.paginatePanel = async function ({
-    req,
-    sortWithOrder,
-    startPaginate,
-    endPaginate,
-}) {
-    const words = await this.aggregate()
-        .match(req.filters)
-        .sort(sortWithOrder)
-        .facet({
-            total: [{ $count: 'count' }],
-            data: [
-                {
-                    $project: {
-                        _id: 0,
-                        id: '$_id',
-                        slug: 1,
-                        polishWord: 1,
-                        definition: 1,
-                        synonyms: 1,
-                        reference: 1,
-                    },
-                },
-            ],
-        })
-        .unwind('total')
-        .project({
-            info: {
-                count: '$total.count',
-            },
-            data: {
-                $slice: ['$data', startPaginate, endPaginate],
-            },
-        })
-        .exec();
 
     return words[0];
 };

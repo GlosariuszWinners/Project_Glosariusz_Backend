@@ -9,7 +9,8 @@ export default {
 
     async findAll(req, res) {
         const sort_by = {};
-        sort_by[req.query.sort_by || 'slug'] = req.query.order_by || 'asc';
+        sort_by[req.query.sort || 'slug'] =
+            req.query.order?.toLowerCase() || 'asc';
 
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 25;
@@ -23,6 +24,8 @@ export default {
             skip,
         });
 
+        res.set('Access-Control-Expose-Headers', 'X-Total-Count');
+        res.set('X-Total-Count', parseInt(words?.info.count, 10));
         return words?.data.length
             ? res.status(200).send(words)
             : res.status(404).send({ error: 'There is nothing here' });
@@ -42,14 +45,14 @@ export default {
     },
 
     async update(req, res, next) {
-        const word = await Word.findOne({ slug: req.params.slug });
+        const word = await Word.findOneAndUpdate(
+            { slug: req.params.slug },
+            req.body,
+            {
+                new: true,
+            }
+        );
         if (!word) return next();
-
-        word.polishWord = req.body.polishWord;
-        word.definition = req.body.definition;
-        word.synonyms = req.body.synonyms;
-        word.reference = req.body.reference;
-        await word.save();
 
         return res
             .status(200)
