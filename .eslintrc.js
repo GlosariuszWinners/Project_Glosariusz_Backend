@@ -19,6 +19,7 @@ module.exports = {
         camelcase: 'off',
         'no-console': 'off',
         'consistent-return': 'off',
+        'no-param-reassign': 'off',
         'prettier/prettier': [
             'error',
             {
