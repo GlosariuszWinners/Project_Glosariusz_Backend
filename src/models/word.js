@@ -89,14 +89,14 @@ Word.statics.paginate = async function ({ req, sort_by, page, limit, skip }) {
         })
         .exec();
 
-    if (words?.[0].info.next) {
+    if (words?.[0]?.info.next) {
         const url = new URL(
             `${req.protocol}://${req.get('host')}${req.originalUrl}`
         );
         url.searchParams.set('page', page + 1);
         words[0].info.next = url.toString();
     }
-    if (words?.[0].info.previous) {
+    if (words?.[0]?.info.previous) {
         const url = new URL(
             `${req.protocol}://${req.get('host')}${req.originalUrl}`
         );

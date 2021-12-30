@@ -2,7 +2,7 @@ import Word from '../models/word';
 
 export default {
     async findOne(req, res, next) {
-        const word = await Word.findOne({ _id: req.params.id });
+        const word = await Word.findById(req.params.id);
         if (!word) return next();
         const response = {
             id: word._id,
@@ -28,7 +28,7 @@ export default {
             endPaginate,
         });
         res.set('Access-Control-Expose-Headers', 'X-Total-Count');
-        res.set('X-Total-Count', parseInt(words?.info?.count, 10));
+        res.set('X-Total-Count', parseInt(words?.info.count, 10));
         return words?.data.length
             ? res.status(200).send(words?.data)
             : res.status(404).send({ error: 'There is nothing here' });

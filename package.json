@@ -30,16 +30,13 @@
         "@babel/cli": "^7.16.0",
         "@babel/core": "^7.16.5",
         "@babel/node": "^7.16.5",
-        "@babel/plugin-proposal-optional-chaining": "^7.16.5",
-        "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
-        "@babel/plugin-transform-async-to-generator": "^7.16.5",
-        "@babel/polyfill": "^7.12.1",
         "@babel/preset-env": "^7.16.5",
         "eslint": "^8.5.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-import": "^2.25.3",
         "eslint-plugin-prettier": "^4.0.0",
+        "nodemon": "^2.0.15",
         "prettier": "^2.5.1",
         "rimraf": "^3.0.2"
     }

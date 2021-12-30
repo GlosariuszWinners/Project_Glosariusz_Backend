@@ -1,6 +1,7 @@
 import { Router } from 'express';
+import config from '../config/config';
 import wordsController from '../controllers/wordsController';
-import jwtAuth from '../middlewares/auth';
+import jwtAuth, { noAuth } from '../middlewares/auth';
 import { catchAsync } from '../middlewares/errors';
 import getFilters from '../middlewares/filters/words';
 
@@ -14,13 +15,25 @@ export default () => {
     api.get('/', getFilters, catchAsync(wordsController.findAll));
 
     // POST /words
-    api.post('/', jwtAuth, catchAsync(wordsController.create));
+    api.post(
+        '/',
+        config.env === 'production' ? jwtAuth : noAuth,
+        catchAsync(wordsController.create)
+    );
 
     // PUT /words/:slug
-    api.put('/:slug', jwtAuth, catchAsync(wordsController.update));
+    api.put(
+        '/:slug',
+        config.env === 'production' ? jwtAuth : noAuth,
+        catchAsync(wordsController.update)
+    );
 
     // DELETE /words/:slug
-    api.delete('/:slug', jwtAuth, catchAsync(wordsController.remove));
+    api.delete(
+        '/:slug',
+        config.env === 'production' ? jwtAuth : noAuth,
+        catchAsync(wordsController.remove)
+    );
 
     return api;
 };

@@ -22,6 +22,7 @@ export default {
             limit,
             skip,
         });
+
         return words?.data.length
             ? res.status(200).send(words)
             : res.status(404).send({ error: 'There is nothing here' });
