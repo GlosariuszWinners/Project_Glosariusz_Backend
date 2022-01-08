@@ -28,7 +28,7 @@ export default {
         res.set('X-Total-Count', parseInt(words?.info.count, 10));
         return words?.data.length
             ? res.status(200).send(words)
-            : res.status(404).send({ error: 'There is nothing here' });
+            : res.status(200).send({ data: [] });
     },
 
     async create(req, res) {

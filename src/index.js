@@ -9,7 +9,6 @@ import dbConfig from './config/database';
 import passport from './config/passport';
 import { catchErrors, notFound } from './middlewares/errors';
 import auth from './routes/auth';
-import panelWords from './routes/panelWords';
 import words from './routes/words';
 
 dotenv.config({ path: '.env' });
@@ -46,7 +45,6 @@ if (config.env === 'production') {
 // routes config
 app.use('/api/words', words());
 app.use('/api/auth', auth());
-app.use('/api/panel/words', panelWords());
 
 // errors handling
 app.use(notFound);
