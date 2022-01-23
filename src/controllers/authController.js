@@ -53,10 +53,6 @@ export default {
     },
 
     async logout(req, res, next) {
-        if (!req.cookies.jwt) {
-            return res.status(401).send({ message: 'No token' });
-        }
-
         res.clearCookie('jwt').send({ message: 'You have logged out' });
     },
 };
