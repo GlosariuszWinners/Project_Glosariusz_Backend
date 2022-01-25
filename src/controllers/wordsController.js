@@ -32,6 +32,16 @@ export default {
     },
 
     async create(req, res) {
+        const findWord = await Word.findOne({
+            polishWord: req.body.polishWord,
+        });
+
+        if (findWord) {
+            return res.status(400).send({
+                message: 'Word already exists',
+            });
+        }
+
         const word = await Word.create({
             polishWord: req.body.polishWord,
             definition: req.body.definition,
@@ -45,6 +55,16 @@ export default {
     },
 
     async update(req, res, next) {
+        const findWord = await Word.findOne({
+            polishWord: req.body.polishWord,
+        });
+
+        if (findWord) {
+            return res.status(400).send({
+                message: 'Word already exists',
+            });
+        }
+
         const word = await Word.findOneAndUpdate(
             { slug: req.params.slug },
             req.body,

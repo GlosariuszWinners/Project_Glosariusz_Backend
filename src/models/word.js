@@ -5,8 +5,8 @@ const Word = mongoose.Schema({
     polishWord: {
         type: String,
         required: true,
+        unique: true,
         trim: true,
-        searchable: true,
     },
     definition: {
         type: String,
