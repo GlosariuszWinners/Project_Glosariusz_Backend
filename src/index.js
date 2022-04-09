@@ -43,9 +43,13 @@ if (config.env === 'production') {
 }
 
 // routes config
-app.use('/api', (req, res) => res.status(200).send({ message: `API is running on port ${config.port}` }));
 app.use('/api/words', words());
 app.use('/api/auth', auth());
+app.use('/api', (req, res) =>
+    res
+        .status(200)
+        .send({ message: `API is running on port ${config.server.port}` })
+);
 
 // errors handling
 app.use(notFound);

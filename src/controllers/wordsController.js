@@ -46,7 +46,6 @@ export default {
             polishWord: req.body.polishWord,
             definition: req.body.definition,
             synonyms: req.body.synonyms,
-            reference: req.body.reference,
         });
 
         return res

@@ -16,11 +16,9 @@ const Word = mongoose.Schema({
         {
             _id: false,
             singularForm: String,
-            pluralCountable: String,
-            pluralUncountable: String,
+            pluralForm: String,
         },
     ],
-    reference: Boolean,
 });
 
 Word.set('toJSON', {
@@ -51,7 +49,6 @@ Word.statics.paginate = async function ({ req, sort_by, page, limit, skip }) {
                         polishWord: 1,
                         definition: 1,
                         synonyms: 1,
-                        reference: 1,
                     },
                 },
             ],

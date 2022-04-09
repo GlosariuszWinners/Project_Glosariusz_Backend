@@ -2,12 +2,10 @@
     "name": "project_glosariusz_backend",
     "version": "1.0.0",
     "main": "index.js",
+    "type": "module",
     "scripts": {
-        "clean": "rimraf ./dist",
-        "build": "rimraf ./dist && babel ./src -d ./dist",
-        "prestart": "npm run -s build",
-        "start": "NODE_ENV=production PORT=8080 node dist/index.js",
-        "dev": "NODE_ENV=development PORT=8080 nodemon -w ./src --exec \"babel-node ./src\"",
+        "start": "NODE_ENV=production NODE_OPTIONS='--experimental-specifier-resolution=node' node src/index.js",
+        "dev": "NODE_ENV=development NODE_OPTIONS='--experimental-specifier-resolution=node' nodemon src/index.js",
         "lint": "./node_modules/.bin/eslint .",
         "lint:fix": "./node_modules/.bin/eslint . --fix"
     },
@@ -27,17 +25,12 @@
         "qs": "^6.10.2"
     },
     "devDependencies": {
-        "@babel/cli": "^7.16.0",
-        "@babel/core": "^7.16.5",
-        "@babel/node": "^7.16.5",
-        "@babel/preset-env": "^7.16.5",
-        "eslint": "^8.5.0",
+        "eslint": "^8.13.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-import": "^2.25.3",
+        "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-prettier": "^4.0.0",
         "nodemon": "^2.0.15",
-        "prettier": "^2.5.1",
-        "rimraf": "^3.0.2"
+        "prettier": "^2.5.1"
     }
 }

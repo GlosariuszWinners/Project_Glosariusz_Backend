@@ -8,8 +8,9 @@ export default function getFilters(req, res, next) {
 
     const filters = _.pick(allFilters, availableFilters);
 
-    const schemaFilters = _.mapValues(filters, (value, key) =>
-        key !== 'reference' ? new RegExp(`^${value}`, 'gi') : value
+    const schemaFilters = _.mapValues(
+        filters,
+        (value, key) => new RegExp(`^${value}`, 'gi')
     );
 
     req.filters = { ...schemaFilters };
