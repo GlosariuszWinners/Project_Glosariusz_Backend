@@ -5,7 +5,6 @@ const Word = mongoose.Schema({
     polishWord: {
         type: String,
         required: true,
-        unique: true,
         trim: true,
     },
     definition: {
@@ -33,7 +32,7 @@ Word.set('toJSON', {
 
 // Word.index({ polishWord: 'text' });
 
-Word.plugin(URLSlugs('polishWord', { field: 'slug', update: true }));
+Word.plugin(URLSlugs('polishWord', { field: 'slug' }));
 
 Word.statics.paginate = async function ({ req, sort_by, page, limit, skip }) {
     const words = await this.aggregate()

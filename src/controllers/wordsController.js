@@ -87,12 +87,17 @@ export default {
     },
 
     async alphabet(req, res, next) {
-        const foundLetters = await Word.find({});
-        const letters = foundLetters.reduce((acc, curr) => {
-            return acc.includes(curr.polishWord[0].toLowerCase())
-                ? acc
-                : [...acc, curr.polishWord[0].toLowerCase()];
-        }, []);
-        return res.status(200).send(letters.sort());
+        const result = await Word.aggregate()
+            .match({})
+            .group({
+                _id: {
+                    $toLower: {
+                        $substrCP: ['$polishWord', 0, 1],
+                    },
+                },
+            })
+            .exec();
+        const letters = result.map((letter) => letter._id).sort();
+        return res.status(200).send(letters);
     },
 };
