@@ -21,6 +21,9 @@ export default () => {
         catchAsync(wordsController.create)
     );
 
+    // GET /alphabet
+    api.get('/alphabet', catchAsync(wordsController.alphabet));
+
     // PUT /words/:slug
     api.put(
         '/:slug',

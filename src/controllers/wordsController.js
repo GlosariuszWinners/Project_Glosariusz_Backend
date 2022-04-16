@@ -85,4 +85,17 @@ export default {
 
         return res.status(200).send({ message: 'Word was removed' });
     },
+
+    async alphabet(req, res, next) {
+        const foundLetters = await Word.aggregate([
+            {
+                $group: {
+                    _id: {
+                        $substr: ['$slug', 0, 1],
+                    },
+                },
+            },
+        ]);
+        return res.status(200).send(foundLetters.map((x) => x._id));
+    },
 };
