@@ -97,7 +97,9 @@ export default {
                 },
             })
             .exec();
-        const letters = result.map((letter) => letter._id).sort();
+        const letters = result
+            .map((letter) => letter._id)
+            .sort((a, b) => a.localeCompare(b));
         return res.status(200).send(letters);
     },
 };
